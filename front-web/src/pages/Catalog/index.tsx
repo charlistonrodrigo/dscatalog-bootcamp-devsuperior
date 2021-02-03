@@ -5,6 +5,7 @@ import { makeRequest } from 'core/utils/request';
 import ProductCard from './components/ProductCard';
 import ProductCardLoader from './components/Loaders/ProductCardLoader';
 import './styles.scss';
+import Pagination from 'core/components/Pagination';
 
 const Catalog = () =>{
 //Quando a lista de produtos estiver disponivel, 
@@ -12,10 +13,12 @@ const Catalog = () =>{
 const [productsResponse, setProductsResponse] = useState<ProductsResponse>(); 
 const [isLoading, setIsLoading] = useState(false);
 //Quando o componente iniciar, buscar a lista de produtos.
+const [activePage, setActivePage] = useState(0);
+
 useEffect(() =>{
     
     const params = {
-        page: 0,
+        page: activePage,
         linePerPage: 12
     }
     // iniciar o loader
@@ -26,7 +29,7 @@ useEffect(() =>{
         // finalizar o loader
         setIsLoading(false);
         })
-}, []);
+}, [activePage]);
 
     return (
         <div className="catalog-container">
@@ -43,6 +46,13 @@ useEffect(() =>{
              )}
                        
             </div>
+            {productsResponse && (
+               <Pagination  
+                  totalPages={productsResponse.totalPages}
+                  activePage={activePage}
+                  onChange={page => setActivePage(page)}
+               />
+            )}
         </div>
      );
 }
