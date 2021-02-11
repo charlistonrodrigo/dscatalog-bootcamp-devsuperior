@@ -1,5 +1,8 @@
 package com.charlistonrodrigo.dscatalog.dto;
 
+import com.charlistonrodrigo.dscatalog.services.validation.UserInsertValid;
+
+@UserInsertValid
 public class UserInsertDTO extends UserDTO{
 	private static final long serialVersionUID = 1L;
 
@@ -16,6 +19,5 @@ public class UserInsertDTO extends UserDTO{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
 	
 }
