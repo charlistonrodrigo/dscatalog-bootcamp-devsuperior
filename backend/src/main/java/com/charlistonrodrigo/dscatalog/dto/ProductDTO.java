@@ -29,7 +29,7 @@ public class ProductDTO implements Serializable{
 	private String description;
 	
 	@Positive(message = "O preço deve ser um valor positivo")
-	private double price;
+	private Double price;
 	private String imgUrl;
 	
 	@PastOrPresent(message = "A data do produto não pode ser futura")
@@ -42,7 +42,7 @@ public class ProductDTO implements Serializable{
 		
 	}
 
-	public ProductDTO(Long id, String name, String description, double price, String imgUrl, Instant date) {
+	public ProductDTO(Long id, String name, String description, Double price, String imgUrl, Instant date) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -91,11 +91,11 @@ public class ProductDTO implements Serializable{
 		this.description = description;
 	}
 
-	public double getPrice() {
+	public Double getPrice() {
 		return price;
 	}
 
-	public void setPrice(double price) {
+	public void setPrice(Double price) {
 		this.price = price;
 	}
 
