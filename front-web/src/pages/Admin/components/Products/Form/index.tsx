@@ -1,4 +1,4 @@
-import { makeRequest } from 'core/utils/request';
+import { makePrivateRequest } from 'core/utils/request';
 import React, { useState } from 'react';
 import BaseForm from '../../BaseForm';
 import  './styles.scss';
@@ -34,7 +34,7 @@ import  './styles.scss';
              imgUrl: 'https://cdn.awsli.com.br/800x800/259/259434/produto/54859844/dd327c1b46.jpg',
              categories: [{ id: formData.category }]
          }
-         makeRequest({ url: '/products', method: 'POST', data: payload })
+         makePrivateRequest({ url: '/products', method: 'POST', data: payload })
            .then(() => {
                 setFormData({ name:'', category:'', price: '', description:''});
            });
