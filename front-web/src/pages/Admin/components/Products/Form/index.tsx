@@ -1,27 +1,33 @@
+import { useEffect, useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import { makePrivateRequest, makeRequest } from 'core/utils/request';
-import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
 import { useHistory, useParams } from 'react-router';
 import { toast } from 'react-toastify';
+import Select from 'react-select';
 import BaseForm from '../../BaseForm';
-import  './styles.scss';
+import './styles.scss';
+import { Category } from 'core/types/Product';
 
- type FormState = {
-     name: string;
-     price: string;
-     //category: string;
-     description: string;
-     imgUrl: string;
- }
+type FormState = {
+    name: string;
+    price: string;
+    description: string;
+    imgUrl: string;
+    categories: Category[];
 
- type ParamsType = {
+}
+
+type ParamsType = {
     productId: string,
 }
 
- const Form = () => {
-     const { register, handleSubmit, formState: { errors }, setValue } =useForm<FormState>();
-     const history = useHistory();
-     const { productId } = useParams<ParamsType>();
+const Form = () => {
+    const { register, handleSubmit, errors, setValue, control } = useForm<FormState>();
+    const history = useHistory();
+    const { productId } = useParams<ParamsType>();
+    const [isLoadingCategories, setIsLoadingCategories] = useState(false);
+    const [categories, setCategories] = useState<Category[]>([]);
+    /*
      const isEditing = productId !== 'create';
      const formTitle = isEditing ? 'Editar produto' : 'cadastrar um produto';
 
@@ -29,19 +35,31 @@ import  './styles.scss';
        if (isEditing) {
         makeRequest({ url: `/products/${productId}` })
             .then(response => {
-                setValue('name', response.data.name);
+                setValue('categories', response.data.categories);
                 setValue('price', response.data.price);
                 setValue('description', response.data.description);
                 setValue('imgUrl', response.data.imgUrl);
             })
        }     
     }, [productId, isEditing, setValue]);
+
+    useEffect(() => {
+        setIsLoadingCategories(true); 
+        makeRequest({ url: `/categories`})
+           .then(response => setCategories(response.data.content))
+           .finally(() => setIsLoadingCategories(false));
+    }, []);
      
-     const onSubmit = (data: FormState) => {         
+     const onSubmit = (data: FormState) => {  
+        const payload = {
+            ...data,
+            //imgUrl: uploadedImgUrl  || productImgUrl
+        } 
+        
          makePrivateRequest({ 
              url: isEditing ? `/products/${productId}` : '/products',
              method: isEditing ? 'PUT' : 'POST', 
-             data 
+             data: payload
             })  
             .then(() => {
                 toast.info('Produto salvo com sucesso!');
@@ -61,6 +79,7 @@ import  './styles.scss';
                 <div className="col-6">
                     <div className="margin-bottom-30">
                         <input 
+                            
                             {...register("name", 
                             { 
                                 required: "Campo obrigatório",
@@ -79,19 +98,27 @@ import  './styles.scss';
                             </div>
                          )}
                     </div>
-                    
-                    {/*
-                    <select 
-                        value={formData.category}
-                        className="form-control mb-5" onChange={handleOnChange}
-                        name="category"
-                     > 
-                        <option value="1">Livros</option>
-                        <option value="3">Computadores</option>
-                        <option value="2">Eletrônicos</option>
-                        
-                    </select>
-                    */ }
+                    <div className="margin-bottom-30">
+                        <Controller
+                            as={Select} 
+                            name="categories"
+                            rules={{required: true}}
+                            control={control}  
+                            options={categories} 
+                            isLoading={isLoadingCategories}
+                            getOptionLabel={(option: Category) => option.name}
+                            getOptionValue={(option: Category) => String(option.id)}
+                            classNamePrefix="categories-select"
+                            placeholder="Categoria"
+                            defaultValue=""
+                            isMulti
+                        />
+                        {errors.categories && (
+                             <div className="invalid-feedback d-block">
+                                  Campo obrigatório
+                             </div>
+                        )}
+                    </div>
                     <div className="margin-bottom-30">
                         <input 
                             {...register("price", { required: "Campo obrigatório" })}
@@ -127,19 +154,126 @@ import  './styles.scss';
                        name="description"  
                        className="form-control input-base"
                        placeholder="Descrição" 
-                       cols={30} 
-                       rows={10}
-                    />
-                    {errors.description && (
-                            <div className="invalid-feedback d-block">
-                            {errors.description.message}
-                            </div>
-                        )}
+                       */
+    const isEditing = productId !== 'create';
+    const formTitle = isEditing ? 'Editar produto' : 'cadastrar um produto';
+
+
+    useEffect(() => {
+        if (isEditing) {  //Reconhecendo que estou editando
+            makeRequest({ url: `/products/${productId}` })
+                .then(response => {
+                    setValue('name', response.data.name);
+                    setValue('price', response.data.price);
+                    setValue('description', response.data.description);
+                    setValue('imgUrl', response.data.imgUrl);
+                    setValue('categories', response.data.categories);
+                })
+        }
+    }, [productId, isEditing, setValue]);
+    useEffect(() => {
+        setIsLoadingCategories(true);
+        makeRequest({ url: '/categories' })
+            .then(response => setCategories(response.data.content))
+            .finally(() => setIsLoadingCategories(false))
+    }, []);
+
+    const onSubmit = (data: FormState) => {
+        console.log(data)
+
+        makePrivateRequest({
+            url: isEditing ? `/products/${productId}` : '/products',
+            method: isEditing ? 'PUT' : 'POST',
+            data
+        })
+            .then(() => {
+                toast.info('Produto salvo com sucesso!');
+                history.push('/admin/products');
+            })
+            .catch(() => {
+                toast.error('Erro ao salvar produto!');
+
+            })
+    }
+    return (
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <BaseForm
+                title={formTitle}
+            >
+                <div className="row">
+                <div className="col-6">
+                <div className="margin-bottom-30">
+                <input
+
+                name="name"
+                ref={register({
+                required: "Campo obrigatório",
+                minLength: {
+                value: 5,
+                message: "O campo deve ter ao menos 5 caracteres"
+            },
+                maxLength: {
+                value: 60,
+                message: "O campo deve ter no maximo 60 caracteres"
+            }
+            })
+            }
+                type ="text"
+                className="form-control input-base"
+                placeholder="Nome do produto"
+                />
+            {errors.name && (
+                <div className="invalid-feedback d-block">
+            {errors.name.message}
                 </div>
-            </div>
+            )}
+                </div>
+                <div className="margin-bottom-30">
+                <Controller
+
+                as={Select}
+                name="categories"
+
+                rules={{ required: true }}
+                control={control}
+                isLoading={isLoadingCategories}
+                options={categories}
+                getOptionLabel={(option: Category) => option.name}
+                getOptionValue={(option: Category) => String(option.id)}
+                classNamePrefix="categories-select"
+                placeholder="Categorias"
+                defaultValue=""
+                isMulti
+                />
+            {errors.categories && (
+                <div className="invalid-feedback d-block">
+                Campo obrigatório
+                </div>
+            )}
+                </div>
+
+
+             </div>
+                <div className="col6">
+                <textarea
+
+                name="description"
+               
+                className="form-control input-base"
+                placeholder="Descrição"
+                cols={30}
+                rows={10}
+                />
+            {errors.description && (
+                <div className="invalid-feedback d-block">
+            {errors.description.message}
+                </div>
+            )}
+                </div>
+                </div>
             </BaseForm>
         </form>
-     )
- }
+    )
+}
 
- export default Form;
+export default Form;

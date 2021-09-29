@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import ButtonIcon from 'core/components/ButtonIcon';
 import { Link, useHistory, useLocation } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
 import AuthCard from '../Card';
 import './styles.scss';
 import { makeLogin } from 'core/utils/request';
@@ -17,10 +17,10 @@ type LocationState = {
 }
 
 const Login = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm<FormState>();
+    const { register, handleSubmit, errors } = useForm<FormData>();
     const [hasError, setHasError] = useState(false); 
     const history = useHistory();
-    const location = useLocation<LocationState>();
+    let location = useLocation<LocationState>();
     
     const { from } = location.state || { from: { pathname: "/admin" } };
 
@@ -49,11 +49,13 @@ const Login = () => {
                         type="email" 
                         className={`form-control input-base ${errors.username ? 'is-invalid' : ''}`}
                         placeholder="Email"
-                        {...register("username", { required: "Campo obrigatório",
-                        pattern: {
-                          value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                          message: "Email inválido"
-                        }
+                        name="username"
+                        ref={register({
+                            required:"Campo obrigatorio",
+                            pattern: { 
+                                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                message: "Email inválido"
+                            }
                         })}
                     /> 
                     {errors.username && (
@@ -67,7 +69,8 @@ const Login = () => {
                         type="password" 
                         className={`form-control input-base ${errors.password ? 'is-invalid' : ''}`}
                         placeholder="Senha"
-                        {...register("password", { required: "Campo obrigatório" })}
+                        name="password"
+                        ref={register({ required: "Campo obrigatório" })} 
                     /> 
                     {errors.password && (
                         <div className="invalid-feedback d-block">
