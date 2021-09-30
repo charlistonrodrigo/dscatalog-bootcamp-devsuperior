@@ -17,10 +17,10 @@ type LocationState = {
 }
 
 const Login = () => {
-    const { register, handleSubmit, errors } = useForm<FormData>();
+    const { register, handleSubmit, errors } = useForm<FormState>();
     const [hasError, setHasError] = useState(false); 
     const history = useHistory();
-    let location = useLocation<LocationState>();
+    const location = useLocation<LocationState>();
     
     const { from } = location.state || { from: { pathname: "/admin" } };
 
