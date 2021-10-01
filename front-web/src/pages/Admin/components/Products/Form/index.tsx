@@ -31,14 +31,16 @@ const Form = () => {
     const isEditing = productId !== 'create';
      const formTitle = isEditing ? 'Editar produto' : 'cadastrar um produto';
 
+     
      useEffect(() => {
        if (isEditing) {
         makeRequest({ url: `/products/${productId}` })
             .then(response => {
-                setValue('categories', response.data.categories);
+                setValue('name', response.data.name);
                 setValue('price', response.data.price);
                 setValue('description', response.data.description);
                 setValue('imgUrl', response.data.imgUrl);
+                setValue('categories', response.data.categories);
             })
        }     
     }, [productId, isEditing, setValue]);
@@ -51,15 +53,16 @@ const Form = () => {
     }, []);
      
      const onSubmit = (data: FormState) => {  
+         /*
         const payload = {
             ...data,
             //imgUrl: uploadedImgUrl  || productImgUrl
         } 
-        
+        */
          makePrivateRequest({ 
              url: isEditing ? `/products/${productId}` : '/products',
              method: isEditing ? 'PUT' : 'POST', 
-             data: payload
+             data
             })  
             .then(() => {
                 toast.info('Produto salvo com sucesso!');
@@ -80,13 +83,14 @@ const Form = () => {
                     <div className="margin-bottom-30">
                         <input 
                             
-                            {...register("name", 
-                            { 
+                            ref={register({ 
+                             
                                 required: "Campo obrigatório",
                                 minLength: { value: 5, message: "O campo deve ter no mínimo 5 caracteres" },
                                 maxLength: { value: 60, message: "O campo deve ter no máximo 60 caracteres" },  
+                            
+                            })
                             }
-                             )}
                             name="name"
                             type="text" 
                             className="form-control input-base" 
@@ -104,13 +108,12 @@ const Form = () => {
                             name="categories"
                             rules={{required: true}}
                             control={control}  
-                            options={categories} 
                             isLoading={isLoadingCategories}
+                            options={categories} 
                             getOptionLabel={(option: Category) => option.name}
                             getOptionValue={(option: Category) => String(option.id)}
                             classNamePrefix="categories-select"
-                            placeholder="Categoria"
-                            defaultValue=""
+                            placeholder="Categorias"
                             isMulti
                         />
                         {errors.categories && (
@@ -121,7 +124,10 @@ const Form = () => {
                     </div>
                     <div className="margin-bottom-30">
                         <input 
-                            {...register("price", { required: "Campo obrigatório" })}
+                            ref={register({ 
+                             required: "Campo obrigatório" 
+                            })
+                            } 
                             name="price"
                             type="number" 
                             className="form-control input-base" 
@@ -135,7 +141,10 @@ const Form = () => {
                     </div>
                     <div className="margin-bottom-30">
                         <input 
-                            {...register("imgUrl", { required: "Campo obrigatório" })}
+                            ref={register({
+                                 required: "Campo obrigatório" 
+                                })
+                            }
                             name="imgUrl"
                             type="text" 
                             className="form-control input-base"
@@ -150,7 +159,10 @@ const Form = () => {
                 </div>
                 <div className="col-6">
                     <textarea 
-                       {...register("description", { required: "Campo obrigatório" })}
+                       ref={register({
+                           required: "Campo obrigatório"
+                       })
+                       }
                        name="description"  
                        className="form-control input-base"
                        placeholder="Descrição"

@@ -1,6 +1,6 @@
+import React from 'react';
 import ProductPrice from 'core/components/ProductPrice';
 import { Product } from 'core/types/Product';
-import React from 'react';
 import { Link } from 'react-router-dom';
 import './styles.scss';
 
