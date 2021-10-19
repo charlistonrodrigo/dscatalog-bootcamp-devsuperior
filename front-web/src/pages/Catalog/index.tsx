@@ -58,7 +58,7 @@ const handleChangeName = (name: string) => {
 
     return (
         <div className="catalog-container">
-            <div className="d-flex justify-content-between">
+            <div className="filter-container">
                 <h1 className="catalog-title">
                     Catálogo de produtos
                 </h1>

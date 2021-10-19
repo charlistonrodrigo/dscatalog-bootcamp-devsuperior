@@ -42,7 +42,7 @@ public class ProductService {
 	public Page<ProductDTO> findAllPaged(Long categoryId, String name, PageRequest pageRequest){
 		List<Category> categories =  (categoryId == 0) ? null : Arrays.asList(categoryRepository.getOne(categoryId));
 		Page<Product> page = repository.find(categories, name, pageRequest);
-		repository.find(page.toList());
+		repository.findProductsWithCategories(page.getContent());
 		return page.map(x -> new ProductDTO(x, x.getCategories()));
 	}
 
@@ -71,10 +71,7 @@ public class ProductService {
 		try {
 			Product entity = repository.getOne(id);
 			copyDtoToEntity(dto, entity);
-			if (entity.getCategories().size() == 0) {
-				Category cat  =  categoryRepository.getOne(1L);
-				entity.getCategories().add(cat);
-			}
+			
 			entity = repository.save(entity);
 			return new ProductDTO(entity);
 	    }
