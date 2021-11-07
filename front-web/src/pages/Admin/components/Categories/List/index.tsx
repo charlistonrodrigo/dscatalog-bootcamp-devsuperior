@@ -1,3 +1,4 @@
+
 import Pagination from 'core/components/Pagination';
 import { ProductsResponse } from 'core/types/Product';
 import { Category } from 'core/types/Product';
@@ -12,11 +13,18 @@ import { Link, useHistory } from 'react-router-dom';
 import ProductFilters from 'core/components/ProductFilters';
 
 type Props = {
-   product: Product,
-   
+   //product: Product,
+   onSearch: (filter: FilterForm) => void;
+}
+export type FilterForm = {
+   name?: string;
+   categoryId?: number;
 }
 
-const List = () => {
+
+const List = ({ onSearch }:Props) => {
+
+   
    const [productsResponse, setProductsResponse] = useState<ProductsResponse>(); 
    const [isLoading, setIsLoading] = useState(false);
    //Quando o componente iniciar, buscar a lista de produtos.
@@ -27,12 +35,14 @@ const List = () => {
    
    const history = useHistory();
 
-   const getProducts = useCallback(() => {
+   const getProducts = useCallback((filter?: FilterForm) => {
       const params = {
          page: activePage,
          linesPerPage: 4,
          direction: 'DESC',
-         orderBy: 'id'
+         orderBy: 'id',
+         name: filter?.name,
+         categoryId: filter?.categoryId,
       }
       // iniciar o loader
       setIsLoading(true);
@@ -53,9 +63,9 @@ const List = () => {
    }
 
    const handleChangeName = (name: string) => {
-      setActivePage(0);
+      //setActivePage(0);
+      onSearch({ name });
       setName(name);
-  
    }
   
    const handleChangeCategory = (category: Category) => {
@@ -85,14 +95,13 @@ const List = () => {
    }
 
    return (
-      <div className="admin-products-list">
-          
-          <div className="admin-list-container">
           <div className="catalog-container">
             <div className="filter-container">
                <button className="btn btn-primary btn-lg" onClick={handleCreate}>
                ADICIONAR
                </button>
+
+               
                <ProductFilters 
                   name={name}
                   category={category}
@@ -100,15 +109,18 @@ const List = () => {
                   handleChangeName={handleChangeName} 
                   clearFilters={clearFilters}                 
                />
+               
             </div> 
             <div className="catalog-products-list">
               
             {isLoading ? "" : (
                  productsResponse?.content.map(product => (
-                  <CardCategories product={product} key={product.id} onRemove={onRemove} />
+                  <Link to={`/products/${product.id}`} key={product.id}>
+                       <CardCategories product={product} key={product.id} onRemove={onRemove} />
+                  </Link>     
               ))
              )}
-            
+           
              {productsResponse && (
                <Pagination  
                   totalPages={productsResponse.totalPages}
@@ -118,11 +130,9 @@ const List = () => {
             )}
           </div>
       </div>  
-     </div>
-     </div>
+     
+     
    )
 }
 
 export default List;
-
-

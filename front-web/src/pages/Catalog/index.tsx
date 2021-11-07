@@ -42,7 +42,6 @@ useEffect(() =>{
 const handleChangeName = (name: string) => {
     setActivePage(0);
     setName(name);
-
  }
 
  const handleChangeCategory = (category: Category) => {
