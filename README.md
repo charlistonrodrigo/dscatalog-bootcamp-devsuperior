@@ -8,7 +8,7 @@ Este é um projeto desenvolvido através do bootcamp devsuperior. O projeto refe
 um credenciamento feito por um cadastro e em seguida efetuar um login para acesso no sistema. Ele também possui uma seção onde so usuários devidamente autorizados e autenticados tem acesso, um setor administrativo que permite um cadastro de produtos e usuários.
 
 E possível tambem fazer uma visualização detalhada de cada produto além de uma busca por nome e categoria de produtos. Este aplicativo possue também uma busca paginada 
-e recursos de crud somente para usuários de perfil administrador. 
+e recursos de crud e upload de imagens somente para usuários de perfil administrador. 
 
 ## Informações adicionais
 
@@ -24,7 +24,9 @@ Também foi desenvolvido uma implementação de entrega contínua, e testes de i
   <img width="600" src="front-web/src/core/assets/images/LOGIN.png">
   <img width="600" src="front-web/src/core/assets/images/CADASTRO.png">
   <img width="600" src="front-web/src/core/assets/images/DETALHE DO PRODUTO.png">
+  <img width="600" src="front-web/src/core/assets/images/CRUD DO .png">
   <img width="600" src="front-web/src/core/assets/images/CRUD DO PRODUTO.png">
+  <img width="600" src="front-web/src/core/assets/images/CRUD DO .png">
 </P>
 
 ## Como execultar o projeto
