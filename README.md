@@ -19,7 +19,7 @@ Também foi desenvolvido uma implementação de entrega contínua, e testes de i
 
 ## Layout
 <p align="center">
-  <img width="200" src="core/assets/images/HOME.png">
+  <img width="200" src="front-web/src/core/assets/images/HOME.png">
   <img width="200" src="core/assets/images/LOGIN.png">
  
   
