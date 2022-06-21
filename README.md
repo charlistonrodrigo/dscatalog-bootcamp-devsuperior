@@ -2,10 +2,10 @@
 
 # dscatalog-bootcamp-devsuperior
 
-# Sobre
+## Sobre
 
 Este é um projeto desenvolvido através do bootcamp devsuperior. O projeto refere-se a um catalogo de produtos onde o usuário poderá interagir com o sistema a partir de 
-um credenciamneto feito por um cadastro e sucessivamente efetuar um login para acesso no sistema. Ele também possui uma seção onde so usuários devidamente autorizados e autenticados tem acesso, um setor administrativo que permite um cadastro de produtos e usuários.
+um credenciamento feito por um cadastro e em seguida efetuar um login para acesso no sistema. Ele também possui uma seção onde so usuários devidamente autorizados e autenticados tem acesso, um setor administrativo que permite um cadastro de produtos e usuários.
 
 E possível tambem fazer uma visualização detalhada de cada produto além de uma busca por nome e categoria de produtos. Este aplicativo possue também uma busca paginada 
 e recursos de crud somente para usuários de perfil administrador. 
