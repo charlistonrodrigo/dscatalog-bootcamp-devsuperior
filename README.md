@@ -24,9 +24,9 @@ Também foi desenvolvido uma implementação de entrega contínua, e testes de i
   <img width="600" src="front-web/src/core/assets/images/LOGIN.png">
   <img width="600" src="front-web/src/core/assets/images/CADASTRO.png">
   <img width="600" src="front-web/src/core/assets/images/DETALHE DO PRODUTO.png">
-  <img width="600" src="front-web/src/core/assets/images/CRUD DO .png">
+  <img width="600" src="front-web/src/core/assets/images/CADASTRO DO PRODUTO.png">
   <img width="600" src="front-web/src/core/assets/images/CRUD DO PRODUTO.png">
-  <img width="600" src="front-web/src/core/assets/images/CRUD DO .png">
+  <img width="600" src="front-web/src/core/assets/images/CRUD DO USUÁRIO.png">
 </P>
 
 ## Como execultar o projeto
