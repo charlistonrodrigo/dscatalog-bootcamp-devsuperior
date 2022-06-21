@@ -19,8 +19,8 @@ Também foi desenvolvido uma implementação de entrega contínua, e testes de i
 
 ## Layout
 <p align="center">
-  <img width="400" src="front-web/src/core/assets/images/HOME.png">
-  <img width="400" src="front-web/src/core/assets/images/CATÁLOGO.png">
+  <img width="500" src="front-web/src/core/assets/images/HOME.png">
+  <img width="600" src="front-web/src/core/assets/images/CATÁLOGO.png">
   <img width="400" src="front-web/src/core/assets/images/LOGIN.png">
   <img width="400" src="front-web/src/core/assets/images/CADASTRO.png">
   <img width="400" src="front-web/src/core/assets/images/DETALHE DO PRODUTO.png">
