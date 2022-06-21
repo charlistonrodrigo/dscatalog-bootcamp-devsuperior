@@ -29,6 +29,6 @@ Também foi desenvolvido uma implementação de entrega contínua, e testes de i
 
 ## Como execultar o projeto
 
-Baixe o aplicativo do expo em seu dispositivo móvel. Para execultar o projeto basta importa-lo no vsCode e execultar o comando expo start na pasta do projeto. Selecione a opção tunel na tela que abrir no navegador, isso vai gerar um qrCode. Com o expo aberto em seu dispositivo móvel clique em qrCode para ler o qrCode que abrir na tela do computador.
-Isso permitira a execução do aplicativo em seu dispositivo móvel.
+Para execultar o projeto basta importa-lo no vsCode, após clonar o projeto do github na sua máquina e execultar o comando npm start na pasta front-end do projeto, dentro do terminal.
+Isso permitira a execução do aplicativo em seu dispositivo na porta que estiver liberada.
 
