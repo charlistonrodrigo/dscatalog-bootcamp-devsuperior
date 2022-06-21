@@ -19,7 +19,7 @@ Também foi desenvolvido uma implementação de entrega contínua, e testes de i
 
 ## Layout
 <p align="center">
-  <img width="200" src="assets/CaminhoCerto.png">
+  <img width="200" src="assets/image/HOME.png">
   <img width="200" src="assets/Contatos.png">
   <img width="200" src="assets/QRCode.png"><br>
   <img width="200" heigth="200" src="assets/Ligacao.png">
